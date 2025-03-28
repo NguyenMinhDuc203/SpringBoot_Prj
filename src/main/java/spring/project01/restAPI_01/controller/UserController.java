@@ -1,5 +1,6 @@
 package spring.project01.restAPI_01.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import spring.project01.restAPI_01.dto.request.UserDTO;
 
@@ -12,7 +13,7 @@ import java.util.List;
 public class UserController {
 
     @PostMapping(value = "/")
-    public String addUser( @RequestBody UserDTO userDto){
+    public String addUser( @Valid @RequestBody UserDTO userDto){
 
         System.out.println("User :"+ userDto.toString());
         return "Added user";
@@ -20,7 +21,7 @@ public class UserController {
 
     @PutMapping(value="/{userID}")
     public String updateValue( @PathVariable long userID){
-        UserDTO user = new UserDTO(1l, "Nguyen Minh Duc", "email", false);
+        UserDTO user = new UserDTO(1l, "Nguyen Minh Duc", "0987654321","email", false);
         System.out.println("User before update: "+ user.toString());
 
         if(userID == user.getUserID()){
@@ -36,7 +37,7 @@ public class UserController {
 
     @PatchMapping(value ="/{userID}")
     public String changeValue(@PathVariable long userID ,@RequestParam boolean state){
-        UserDTO user = new UserDTO(1l, "Nguyen Minh Duc", "email", false);
+        UserDTO user = new UserDTO(1l, "Nguyen Minh Duc","0987654321", "email", false);
         if(userID == user.getUserID()){
             user.setState(state);
             System.out.println(user.toString());
@@ -47,7 +48,7 @@ public class UserController {
 
     @DeleteMapping("/{userID}")
     public String removeUser(@PathVariable long userID){
-        UserDTO user = new UserDTO(1l, "Nguyen Minh Duc", "email", false);
+        UserDTO user = new UserDTO(1l, "Nguyen Minh Duc","0987654321", "email", false);
         System.out.println("User before remove: "+ user.toString());
         if(userID == user.getUserID()){
             user = new UserDTO();
@@ -61,8 +62,8 @@ public class UserController {
     @GetMapping("/")
     public String getAll(){
         List<UserDTO> list = new ArrayList<>();
-        list.add(new UserDTO(1L, "Duc", "duc@email.com", true));
-        list.add(new UserDTO(2L, "Ha", "ha@email.com", false));
+        list.add(new UserDTO(1L, "Duc","0987654321", "duc@email.com", true));
+        list.add(new UserDTO(2L, "Ha", "0987654321","ha@email.com", false));
 
         System.out.println(list.toString());
         return "Getted list";
@@ -70,7 +71,7 @@ public class UserController {
 
     @GetMapping("/{userID}")
     public String getUser(@PathVariable long userID){
-        UserDTO user = new UserDTO(1l, "Duc", "ducdeptrai@email.com", true);
+        UserDTO user = new UserDTO(1l, "Duc","0987654321", "ducdeptrai@email.com", true);
 
         if(userID == user.getUserID()){
             System.out.println(user.toString());
